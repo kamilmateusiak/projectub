@@ -1,16 +1,19 @@
 <template>
-  <div class="timeline-container">
-    <transition name="slide" type="animation">
-      <edit-item-modal v-if="isEditing" :style="modalStyle" :item="editedItem"></edit-item-modal>
-    </transition>
-    <h1>
-      {{ projectName }}
-    </h1>
-    <ol class="timeline">
-      <single-item v-for="(item, index) in items" :item="item" :key="index"></single-item>
-    </ol>
-    <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/project/' + project_key + '/new'">Dodaj</router-link>
+  <div class="row timeline-container">
+    <div class="col s12 m8 l6">
+      <transition name="slide" type="animation">
+        <edit-item-modal v-if="isEditing" :style="modalStyle" :item="editedItem"></edit-item-modal>
+      </transition>
+      <h1>
+        {{ projectName }}
+      </h1>
+      <ol class="timeline">
+        <single-item v-for="(item, index) in items" :item="item" :key="index"></single-item>
+      </ol>
+      <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/project/' + project_key + '/new'">Dodaj</router-link>
+    </div>
   </div>
+
 </template>
 
 <script>
