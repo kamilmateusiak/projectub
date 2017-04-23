@@ -5,12 +5,12 @@
         <edit-item-modal v-if="isEditing" :style="modalStyle" :item="editedItem"></edit-item-modal>
       </transition>
       <h1>
-        {{ projectName }}
+        {{ project.name }}
       </h1>
       <ol class="timeline">
-        <single-item v-for="(item, index) in items" :item="item" :key="index"></single-item>
+        <single-item v-for="(event, index) in project.events" :event="event" :key="index"></single-item>
       </ol>
-      <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/project/' + project_key + '/new'">Dodaj</router-link>
+      <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/project/' + project.name + '/new'">Dodaj</router-link>
     </div>
   </div>
 
@@ -18,7 +18,6 @@
 
 <script>
   import SingleItem from '../components/SingleItem.vue'
-  import db from '../firebase'
   import EditItemModal from '../components/EditItemModal.vue'
   import { eventBus } from '../main'
   import toastr from 'toastr'
@@ -27,9 +26,10 @@
     name: 'app',
     data () {
       return {
-        project_key: this.$route.params.id,
+        name: this.$route.params.name,
         isEditing: false,
-        editedItem: {}
+        editedItem: {},
+        project: {}
       }
     },
     computed: {
@@ -53,13 +53,18 @@
       SingleItem,
       EditItemModal
     },
-    firebase () {
-      return {
-        items: db.ref(this.project_key),
-        project: db.ref('projects').child(this.project_key)
-      }
-    },
     created () {
+      this.$http.get(`projects/${this.name}`).then(res => {
+        return res.json()
+      })
+      .then(data => {
+        this.project = data
+        console.log(data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
       eventBus.$on('editItem', (data) => {
         this.editedItem = data
         this.isEditing = true

@@ -1,11 +1,11 @@
 <template>
   <li class="timeline-node">
-    <div class="timeline-stamp">{{ item.createdOn }}</div>
-    <div class="timeline-name">{{ item.name }}</div>
-    <div class="timeline-content">{{ item.content }}</div>
-    <div class="timeline-links" v-for="link in item.links">
+    <div class="timeline-stamp">{{ createdOn }}</div>
+    <div class="timeline-name">{{ event.name }}</div>
+    <div class="timeline-content">{{ event.description }}</div>
+    <!--<div class="timeline-links" v-for="link in event.links">
       <a :href="link.href">{{ link.label }}</a>
-    </div>
+    </div>-->
     <span class="item-icon"><i class="tiny material-icons" @click="editItem">mode_edit</i></span>
     <span class="item-icon"><i class="tiny material-icons" @click="removeItem">delete</i></span>
   </li>
@@ -15,18 +15,26 @@
   import { eventBus } from '../main'
 
   export default {
-    props: ['item'],
+    props: ['event'],
     data () {
       return {
-        editedItem: this.item
+        editedEvent: this.event
+      }
+    },
+    computed: {
+      createdOn () {
+        if (this.event.date) {
+          return new Date(this.event.date).toLocaleDateString('pl-PL')
+        }
+        return ''
       }
     },
     methods: {
       editItem () {
-        eventBus.$emit('editItem', this.editedItem)
+        eventBus.$emit('editEvent', this.editedEvent)
       },
       removeItem () {
-        eventBus.$emit('removeItem', this.editedItem)
+        eventBus.$emit('removeEvent', this.editedEvent)
       }
     }
   }

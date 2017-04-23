@@ -15,37 +15,41 @@
 
 <script>
   import toastr from 'toastr'
-  import db from '../firebase'
-
-  let projectsRef = db.ref('projects')
 
   export default {
     data () {
       return {
         newProject: {
           name: '',
-          createdOn: new Date().toLocaleDateString('pl-PL')
+          date: Date.now
         }
-      }
-    },
-    firebase () {
-      return {
-        projects: projectsRef
       }
     },
     methods: {
       submit () {
-        return projectsRef.push(this.newProject)
-                .then(() => {
-                  toastr.success('Projekt dodany!')
-                  this.newProject.name = ''
-                  this.newProject.createdOn = new Date().toLocaleDateString('pl-PL')
-                  this.$router.push({path: '/project/:id', params: {id: this.route.params.id}})
-                })
-                .catch((err) => {
-                  console.log(err)
-                  toastr.error('Projekt niedodany!')
-                })
+      //   return projectsRef.push(this.newProject)
+      //           .then(() => {
+      //             toastr.success('Projekt dodany!')
+      //             this.newProject.name = ''
+      //             this.newProject.createdOn = new Date().toLocaleDateString('pl-PL')
+      //             this.$router.push({path: '/project/:id', params: {id: this.route.params.id}})
+      //           })
+      //           .catch((err) => {
+      //             console.log(err)
+      //             toastr.error('Projekt niedodany!')
+      //           })
+      // }
+        this.$http.post('projects', this.newProject)
+          .then(() => {
+            toastr.success('Projekt dodany!')
+            this.newProject.name = ''
+            this.newProject = Date.now
+            this.$router.push({path: '/projects'})
+          })
+          .catch((err) => {
+            console.log(err)
+            toastr.error('Projekt niedodany!')
+          })
       }
     }
   }
