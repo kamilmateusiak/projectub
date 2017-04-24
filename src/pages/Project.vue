@@ -55,11 +55,10 @@
     },
     created () {
       this.$http.get(`projects/${this.name}`).then(res => {
-        return res.json()
+        return res.data
       })
       .then(data => {
         this.project = data
-        console.log(data)
       })
       .catch(err => {
         console.log(err)

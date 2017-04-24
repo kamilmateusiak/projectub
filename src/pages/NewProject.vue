@@ -27,19 +27,7 @@
     },
     methods: {
       submit () {
-      //   return projectsRef.push(this.newProject)
-      //           .then(() => {
-      //             toastr.success('Projekt dodany!')
-      //             this.newProject.name = ''
-      //             this.newProject.createdOn = new Date().toLocaleDateString('pl-PL')
-      //             this.$router.push({path: '/project/:id', params: {id: this.route.params.id}})
-      //           })
-      //           .catch((err) => {
-      //             console.log(err)
-      //             toastr.error('Projekt niedodany!')
-      //           })
-      // }
-        this.$http.post('projects', this.newProject)
+        this.$http.post('/projects', this.newProject)
           .then(() => {
             toastr.success('Projekt dodany!')
             this.newProject.name = ''

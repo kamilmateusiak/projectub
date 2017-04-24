@@ -3,9 +3,9 @@
     <div class="timeline-stamp">{{ createdOn }}</div>
     <div class="timeline-name">{{ event.name }}</div>
     <div class="timeline-content">{{ event.description }}</div>
-    <!--<div class="timeline-links" v-for="link in event.links">
-      <a :href="link.href">{{ link.label }}</a>
-    </div>-->
+    <div class="timeline-links" v-for="attachment in event.attachments">
+      <a :href="attachment.href">{{ attachment.name }}</a>
+    </div>
     <span class="item-icon"><i class="tiny material-icons" @click="editItem">mode_edit</i></span>
     <span class="item-icon"><i class="tiny material-icons" @click="removeItem">delete</i></span>
   </li>

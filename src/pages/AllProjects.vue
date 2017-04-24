@@ -21,15 +21,9 @@
       }
     },
     created () {
-      this.$http.get('projects').then(res => {
-        return res.json()
-      })
-      .then(data => {
-        let results = []
-        for (let key in data) {
-          results.push(data[key])
-        }
-        this.projects = results
+      this.$http.get('/projects')
+      .then(response => {
+        this.projects = response.data
       })
       .catch(err => {
         console.log(err)
