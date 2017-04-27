@@ -13,6 +13,7 @@
 
 <script>
   import { eventBus } from '../main'
+  import toastr from 'toastr'
 
   export default {
     props: ['event'],
@@ -34,7 +35,16 @@
         eventBus.$emit('editEvent', this.editedEvent)
       },
       removeItem () {
-        eventBus.$emit('removeEvent', this.editedEvent)
+        this.$http.delete('/events/' + this.event._id)
+        .then((response) => {
+          console.log(response)
+          eventBus.$emit('removeEvent', this.event)
+          toastr.success('Item usunięty!')
+          
+        })
+        .catch(err => {
+          toastr.error(err)
+        })
       }
     }
   }

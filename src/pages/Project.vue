@@ -8,7 +8,7 @@
         {{ project.name }}
       </h1>
       <ol class="timeline">
-        <single-item v-for="(event, index) in project.events" :event="event" :key="index"></single-item>
+        <single-item v-for="event in project.events" :event="event" :key="event._id"></single-item>
       </ol>
       <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/project/' + project.name + '/new'">Dodaj</router-link>
     </div>
@@ -20,6 +20,7 @@
   import SingleItem from '../components/SingleItem.vue'
   import EditItemModal from '../components/EditItemModal.vue'
   import { eventBus } from '../main'
+  import _ from 'lodash'
   import toastr from 'toastr'
 
   export default {
@@ -58,6 +59,9 @@
         return res.data
       })
       .then(data => {
+        data.events = _.sortBy(data.events, [(event) => {
+          return new Date(event.date)
+        }]).reverse()
         this.project = data
       })
       .catch(err => {
@@ -82,15 +86,10 @@
       eventBus.$on('editWasCanceled', () => {
         this.isEditing = false
       })
-      eventBus.$on('removeItem', (item) => {
-        return this.$firebaseRefs.items.child(item['.key']).remove()
-                .then(() => {
-                  toastr.success('Item usunięty!')
-                })
-                .catch((err) => {
-                  toastr.error('Oops, coś nie poszło')
-                  console.log(err)
-                })
+      eventBus.$on('removeEvent', (item) => {
+        this.project.events = _.pull(this.project.events, item)
+        
+        console.log(this.project.events)
       })
     }
   }
