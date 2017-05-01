@@ -36,15 +36,14 @@
       },
       removeItem () {
         this.$http.delete('/events/' + this.event._id)
-        .then((response) => {
-          console.log(response)
-          eventBus.$emit('removeEvent', this.event)
-          toastr.success('Item usunięty!')
-          
-        })
-        .catch(err => {
-          toastr.error(err)
-        })
+          .then((response) => {
+            console.log(response)
+            eventBus.$emit('removeEvent', this.event)
+            toastr.success('Item usunięty!')
+          })
+          .catch(err => {
+            toastr.error(err)
+          })
       }
     }
   }

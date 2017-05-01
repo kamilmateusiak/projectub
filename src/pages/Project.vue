@@ -70,25 +70,17 @@
 
       eventBus.$on('editItem', (data) => {
         this.editedItem = data
+        console.log('edit')
         this.isEditing = true
       })
       eventBus.$on('itemWasEdited', (data) => {
-        return this.$firebaseRefs.items.child(data.key).set(data.item)
-                .then(() => {
-                  this.isEditing = false
-                  toastr.success('Edycja zakończona sukcesem!')
-                })
-                .catch((err) => {
-                  toastr.error('Oops, coś się nie udało')
-                  console.log(err)
-                })
+        return 'lol'
       })
       eventBus.$on('editWasCanceled', () => {
         this.isEditing = false
       })
       eventBus.$on('removeEvent', (item) => {
         this.project.events = _.pull(this.project.events, item)
-        
         console.log(this.project.events)
       })
     }
