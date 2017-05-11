@@ -1,11 +1,20 @@
 <template>
-  <div class="wrapper">
+  <div class="mdl-layout mdl-js-layout
+            mdl-layout--fixed-header">
     <app-header></app-header>
-    <router-view></router-view>
+    <main class="mdl-layout__content">
+      <div class="page-content">
+      
+      <router-view></router-view>
+     
+        
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
+  require('material-design-lite')
   import Header from './shared/Header.vue'
 
   export default {
@@ -17,6 +26,9 @@
 </script>
 
 <style>
+  @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+  @import url('https://code.getmdl.io/1.3.0/material.indigo-amber.min.css');
+
   * {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;

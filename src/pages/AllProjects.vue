@@ -5,7 +5,7 @@
       <ol class="timeline">
         <single-project v-for="project in projects" :key="project._id" :project="project"></single-project>
       </ol>
-      <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/projects/new'">Dodaj</router-link>
+      <router-link tag="button" class="add-new-btn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" :to="'/projects/new'">Dodaj</router-link>
     </div>
   </div>
 </template>
