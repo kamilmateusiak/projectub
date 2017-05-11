@@ -1,7 +1,7 @@
 <template>
   <nav class="nav-extended light-blue darken-3">
     <div class="nav-wrapper">
-      <router-link to="/" tag="a" class="brand-logo">ProjectHub</router-link>
+      <a @click="navigateToHome" class="brand-logo">ProjectHub</a>
     </div>
     <div class="nav-content">
       <ul class="tabs tabs-transparent">
@@ -11,6 +11,16 @@
     </div>
   </nav>
 </template>
+
+<script>
+  export default {
+    methods: {
+      navigateToHome () {
+        this.$router.push({path: '/'})
+      }
+    }
+  }
+</script>
 
 <style scoped>
   .tab {

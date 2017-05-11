@@ -21,7 +21,6 @@
   import EditItemModal from '../components/EditItemModal.vue'
   import { eventBus } from '../main'
   import _ from 'lodash'
-  import toastr from 'toastr'
 
   export default {
     name: 'app',
@@ -68,7 +67,7 @@
         console.log(err)
       })
 
-      eventBus.$on('editItem', (data) => {
+      eventBus.$on('editEvent', (data) => {
         this.editedItem = data
         console.log('edit')
         this.isEditing = true
