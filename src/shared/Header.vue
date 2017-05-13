@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav-extended light-blue darken-3">
+  <!-- <nav class="nav-extended light-blue darken-3">
     <div class="nav-wrapper">
       <a @click="navigateToHome" class="brand-logo">ProjectHub</a>
     </div>
@@ -9,11 +9,44 @@
         <router-link to="/projects" class="tab" tag="li" active-class="active"><a>Projekty</a></router-link>
       </ul>
     </div>
-  </nav>
+  </nav> -->
+  <v-tabs id="mobile-tabs-6" scroll-bars>
+    <v-card class="primary white--text">
+      <v-card-text>
+        <v-card-row>
+          <v-card-title>Page Title</v-card-title>
+        </v-card-row>
+      </v-card-text>
+    </v-card>
+    <v-tab-item
+      :class="{'tab__item--active': currentRoute === 'home'}"
+      :router="true"
+      to="/"
+      slot="activators"
+    >
+      Home
+    </v-tab-item>
+    <v-tab-item
+    :class="{'tab__item--active': currentRoute === 'projects'}"
+      :router="true"
+      to="/projects"
+      slot="activators"
+    >
+      Projects
+    </v-tab-item>
+    
+     
+  </v-tabs>
+
 </template>
 
 <script>
   export default {
+    data () {
+      return {
+        currentRoute: this.$route.name
+      }
+    },
     methods: {
       navigateToHome () {
         this.$router.push({path: '/'})
