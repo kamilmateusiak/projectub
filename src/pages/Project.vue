@@ -89,7 +89,7 @@
 <style>
   .add-new-btn {
     position: fixed;
-    top: 130px;
+    top: 160px;
     right: 20px;
   }
 

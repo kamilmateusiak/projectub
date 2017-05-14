@@ -1,12 +1,7 @@
 <template>
   <v-tabs id="mobile-tabs-6" scroll-bars>
-    <v-card class="primary white--text">
-      <v-card-text>
-        <v-card-row>
-          <v-card-title>Page Title</v-card-title>
-        </v-card-row>
-      </v-card-text>
-    </v-card>
+    
+    <v-card-title class="primary white--text">Projecthub</v-card-title>
     <v-tab-item
       :class="{'tab__item--active': currentRoute === 'home'}"
       :router="true"

@@ -6,8 +6,10 @@
     <div class="timeline-links" v-for="attachment in event.attachments">
       <a :href="attachment.href">{{ attachment.name }}</a>
     </div>
-    <span class="item-icon"><i class="tiny material-icons" @click="editItem">mode_edit</i></span>
-    <span class="item-icon"><i class="tiny material-icons" @click="removeItem">delete</i></span>
+    
+    
+    <span class="item-icon"><v-icon class="blue--text text--darken-2" @click.native="editItem">mode_edit</v-icon></span>
+    <span class="item-icon"><v-icon class="grey--text text--darken-2" @click.native="removeItem">delete</v-icon></span>
   </li>
 </template>
 
@@ -38,6 +40,7 @@
         this.$http.delete('/events/' + this.event._id)
           .then((response) => {
             console.log(response)
+            this.$router.push({path: '/projects'})
             eventBus.$emit('removeEvent', this.event)
             toastr.success('Item usunięty!')
           })

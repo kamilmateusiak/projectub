@@ -3,13 +3,15 @@
     <form @submit.prevent="submit">
       <div class="row">
         <div class="input-field col s12 m6">
-          <input  id="project_name" type="text" class="validate" v-model="newProject.name">
-          <label for="project_name">Nazwa</label>
+        <v-text-field
+            v-model="newProject.name"
+            label="Nazwa"
+          ></v-text-field>
         </div>
         </div>
-      <button class="btn light-blue darken-3" type="submit">Dodaj</button>
+      <v-btn primary dark type="submit">Dodaj</v-btn>
     </form>
-    <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/projects'">Wróć</router-link>
+    <v-btn primary dark router to="/projects" class="add-new-btn">Wróć</v-btn>
   </div>
 </template>
 
