@@ -1,15 +1,4 @@
 <template>
-  <!-- <nav class="nav-extended light-blue darken-3">
-    <div class="nav-wrapper">
-      <a @click="navigateToHome" class="brand-logo">ProjectHub</a>
-    </div>
-    <div class="nav-content">
-      <ul class="tabs tabs-transparent">
-        <router-link to="/" tag="li" class="tab" active-class="active" exact><a>Główna</a></router-link>
-        <router-link to="/projects" class="tab" tag="li" active-class="active"><a>Projekty</a></router-link>
-      </ul>
-    </div>
-  </nav> -->
   <v-tabs id="mobile-tabs-6" scroll-bars>
     <v-card class="primary white--text">
       <v-card-text>
