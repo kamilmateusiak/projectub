@@ -13,8 +13,17 @@
     data () {
       return {
         user: null,
-        token: null,
-        authenticated: false
+        token: null
+      }
+    },
+    created () {
+      if (localStorage.getItem('token') !== null) {
+        this.$store.dispatch('authenticate')
+      }
+    },
+    computed: {
+      authenticated () {
+        return this.$store.getters.authenticated
       }
     },
     components: {

@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import { routes } from './routes'
 import axios from 'axios'
+import { store } from './store/store'
 
 Vue.use(VueRouter)
 Vue.use(Vuetify)
@@ -16,10 +17,20 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  let token = localStorage.getItem('token')
+  if (to.name !== 'login' && token === null) {
+    next('/login')
+  } else {
+    next()
+  }
+})
+
 export const eventBus = new Vue({})
 
 new Vue({ // eslint-disable-line no-new
   el: '#app',
   router,
+  store,
   render: h => h(App)
 })

@@ -53,7 +53,7 @@
     },
     computed: {
       validateEmail () {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])/
         if (!re.test(this.email) && this.email.length > 0) {
           return 'Wrong email!'
         } else {
@@ -67,12 +67,26 @@
         return true
       }
     },
+    mounted () {
+      this.$store.dispatch('logout')
+    },
     methods: {
       login () {
         this.loggingin = true
-        setTimeout(() => {
-          this.loggingin = false
-        }, 2000)
+        this.$http.post('/users/login', {
+          email: this.email,
+          password: this.password
+        })
+        .then(res => {
+          console.log(res)
+          localStorage.setItem('token', res.headers['x-auth'])
+          this.$store.dispatch('authenticate')
+          this.$router.push('/')
+        })
+        .catch(e => {
+          console.log(e)
+        })
+        this.loggingin = false
       }
     }
   }
