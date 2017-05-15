@@ -8,8 +8,8 @@ import axios from 'axios'
 Vue.use(VueRouter)
 Vue.use(Vuetify)
 
-// axios.defaults.baseURL = 'http://localhost:3000/api'
-axios.defaults.baseURL = 'https://lm-project-hub.herokuapp.com/api'
+axios.defaults.baseURL = 'http://localhost:3000/api'
+// axios.defaults.baseURL = 'https://lm-project-hub.herokuapp.com/api'
 Vue.prototype.$http = axios
 
 const router = new VueRouter({

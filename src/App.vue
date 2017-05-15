@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <app-header></app-header>
+    <app-header v-if="authenticated"></app-header>
     <router-view></router-view>
   </div>
 </template>
@@ -10,6 +10,13 @@
 
   export default {
     name: 'app',
+    data () {
+      return {
+        user: null,
+        token: null,
+        authenticated: false
+      }
+    },
     components: {
       appHeader: Header
     }
