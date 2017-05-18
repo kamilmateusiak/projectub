@@ -2,6 +2,9 @@
   <v-tabs id="mobile-tabs-6" scroll-bars>
     <v-card-row  class="primary white--text">
       <v-card-title>Projecthub</v-card-title>
+      <v-btn icon @click.native="navigateToAccount">
+        <v-icon>account_circle</v-icon>
+      </v-btn>
       <v-btn icon @click.native="logout">
         <v-icon>exit_to_app</v-icon>
       </v-btn>
@@ -36,8 +39,8 @@
       }
     },
     methods: {
-      navigateToHome () {
-        this.$router.push({path: '/'})
+      navigateToAccount () {
+        this.$router.push({path: '/account'})
       },
       logout () {
         this.$store.dispatch('logout')

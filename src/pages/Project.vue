@@ -1,6 +1,6 @@
 <template>
   <div class="row timeline-container">
-    <div class="col s12 m8 l6">
+    <v-col xs6>
       <transition name="slide" type="animation">
         <edit-item-modal v-if="isEditing" :style="modalStyle" :item="editedItem"></edit-item-modal>
       </transition>
@@ -11,7 +11,8 @@
         <single-item v-for="event in project.events" :event="event" :key="event._id"></single-item>
       </ol>
       <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/project/' + project.name + '/new'">Dodaj</router-link>
-    </div>
+    </v-col>
+    <project-team></project-team>
   </div>
 
 </template>
@@ -19,6 +20,7 @@
 <script>
   import SingleItem from '../components/SingleItem.vue'
   import EditItemModal from '../components/EditItemModal.vue'
+  import ProjectTeam from '../components/ProjectTeam.vue'
   import { eventBus } from '../main'
   import _ from 'lodash'
 
@@ -51,7 +53,8 @@
     },
     components: {
       SingleItem,
-      EditItemModal
+      EditItemModal,
+      ProjectTeam
     },
     created () {
       this.$http.get(`projects/${this.name}`).then(res => {

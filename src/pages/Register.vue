@@ -29,16 +29,16 @@
           <v-btn
             style="margin: 0 auto;"
             primary
-            v-bind:loading="loggingin"
-            @click.native="login"
-            v-bind:disabled="loggingin"
+            v-bind:loading="registeringin"
+            @click.native="register"
+            v-bind:disabled="registeringin"
           >
-            Login
+            Register
           </v-btn>
         </v-row>
       </form>
       <v-row>
-        <p style="margin: 20px auto;">Don't have account? <router-link tag="a" :to="{name: 'register'}">Sigup</router-link></p>
+        <p style="margin: 20px auto;">If you have account try <router-link tag="a" :to="{name: 'login'}">login</router-link>!</p>
       </v-row>
     </v-container>
   </div>  
@@ -51,7 +51,7 @@
       return {
         email: '',
         password: '',
-        loggingin: false
+        registeringin: false
       }
     },
     computed: {
@@ -74,14 +74,13 @@
       this.$store.dispatch('logout')
     },
     methods: {
-      login () {
-        this.loggingin = true
-        this.$http.post('/users/login', {
+      register () {
+        this.registeringin = true
+        this.$http.post('/users/register', {
           email: this.email,
           password: this.password
         })
         .then(res => {
-          console.log(res)
           let user = res.data
           localStorage.setItem('token', res.headers['x-auth'])
           localStorage.setItem('email', user.email)
@@ -92,7 +91,7 @@
         .catch(e => {
           console.log(e)
         })
-        this.loggingin = false
+        this.registeringin = false
       }
     }
   }
