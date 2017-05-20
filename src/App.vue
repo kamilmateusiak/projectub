@@ -18,7 +18,8 @@
     },
     created () {
       if (localStorage.getItem('token') !== null) {
-        this.$store.dispatch('authenticate')
+        const userId = localStorage.getItem('_id')
+        this.$store.dispatch('authenticate', userId)
       }
     },
     computed: {

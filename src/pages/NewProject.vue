@@ -27,6 +27,11 @@
         }
       }
     },
+    computed: {
+      user () {
+        return this.$store.getters.user
+      }
+    },
     methods: {
       submit () {
         this.$http.post('/projects', this.newProject)
