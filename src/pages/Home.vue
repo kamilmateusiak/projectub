@@ -14,7 +14,7 @@
 
 <style>
   .main-banner {
-    background-image: url('../assets/banner-lm.jpg');
+    background-image: url('./../assets/banner-lm.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
