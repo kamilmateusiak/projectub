@@ -86,7 +86,8 @@
           localStorage.setItem('token', res.headers['x-auth'])
           localStorage.setItem('email', user.email)
           localStorage.setItem('_id', user._id)
-          this.$store.dispatch('authenticate', user._id)
+          const userId = localStorage.getItem('_id')
+          this.$store.dispatch('authenticate', userId)
           this.$router.push('/')
         })
         .catch(e => {
