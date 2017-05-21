@@ -1,35 +1,37 @@
 <template>
   <div class="row timeline-container">
-    <div class="col s12 m8 l6">
+    <v-col xs6>
       <transition name="slide" type="animation">
         <edit-item-modal v-if="isEditing" :style="modalStyle" :item="editedItem"></edit-item-modal>
       </transition>
       <h1>
-        {{ projectName }}
+        {{ project.name }}
       </h1>
       <ol class="timeline">
-        <single-item v-for="(item, index) in items" :item="item" :key="index"></single-item>
+        <single-item v-for="event in project.events" :event="event" :key="event._id"></single-item>
       </ol>
-      <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/project/' + project_key + '/new'">Dodaj</router-link>
-    </div>
+      <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/project/' + project.name + '/new'">Dodaj</router-link>
+    </v-col>
+    <project-team></project-team>
   </div>
 
 </template>
 
 <script>
   import SingleItem from '../components/SingleItem.vue'
-  import db from '../firebase'
   import EditItemModal from '../components/EditItemModal.vue'
+  import ProjectTeam from '../components/ProjectTeam.vue'
   import { eventBus } from '../main'
-  import toastr from 'toastr'
+  import _ from 'lodash'
 
   export default {
     name: 'app',
     data () {
       return {
-        project_key: this.$route.params.id,
+        name: this.$route.params.name,
         isEditing: false,
-        editedItem: {}
+        editedItem: {},
+        project: {}
       }
     },
     computed: {
@@ -51,42 +53,37 @@
     },
     components: {
       SingleItem,
-      EditItemModal
-    },
-    firebase () {
-      return {
-        items: db.ref(this.project_key),
-        project: db.ref('projects').child(this.project_key)
-      }
+      EditItemModal,
+      ProjectTeam
     },
     created () {
-      eventBus.$on('editItem', (data) => {
+      this.$http.get(`projects/${this.name}`).then(res => {
+        return res.data
+      })
+      .then(data => {
+        data.events = _.sortBy(data.events, [(event) => {
+          return new Date(event.date)
+        }]).reverse()
+        this.project = data
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+      eventBus.$on('editEvent', (data) => {
         this.editedItem = data
+        console.log('edit')
         this.isEditing = true
       })
       eventBus.$on('itemWasEdited', (data) => {
-        return this.$firebaseRefs.items.child(data.key).set(data.item)
-                .then(() => {
-                  this.isEditing = false
-                  toastr.success('Edycja zakończona sukcesem!')
-                })
-                .catch((err) => {
-                  toastr.error('Oops, coś się nie udało')
-                  console.log(err)
-                })
+        return 'lol'
       })
       eventBus.$on('editWasCanceled', () => {
         this.isEditing = false
       })
-      eventBus.$on('removeItem', (item) => {
-        return this.$firebaseRefs.items.child(item['.key']).remove()
-                .then(() => {
-                  toastr.success('Item usunięty!')
-                })
-                .catch((err) => {
-                  toastr.error('Oops, coś nie poszło')
-                  console.log(err)
-                })
+      eventBus.$on('removeEvent', (item) => {
+        this.project.events = _.pull(this.project.events, item)
+        console.log(this.project.events)
       })
     }
   }
@@ -95,7 +92,7 @@
 <style>
   .add-new-btn {
     position: fixed;
-    top: 130px;
+    top: 160px;
     right: 20px;
   }
 

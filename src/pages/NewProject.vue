@@ -3,49 +3,48 @@
     <form @submit.prevent="submit">
       <div class="row">
         <div class="input-field col s12 m6">
-          <input  id="project_name" type="text" class="validate" v-model="newProject.name">
-          <label for="project_name">Nazwa</label>
+        <v-text-field
+            v-model="newProject.name"
+            label="Nazwa"
+          ></v-text-field>
         </div>
         </div>
-      <button class="btn light-blue darken-3" type="submit">Dodaj</button>
+      <v-btn primary dark type="submit">Dodaj</v-btn>
     </form>
-    <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/projects'">Wróć</router-link>
+    <v-btn primary dark router to="/projects" class="add-new-btn">Wróć</v-btn>
   </div>
 </template>
 
 <script>
   import toastr from 'toastr'
-  import db from '../firebase'
-
-  let projectsRef = db.ref('projects')
 
   export default {
     data () {
       return {
         newProject: {
           name: '',
-          createdOn: new Date().toLocaleDateString('pl-PL')
+          date: Date.now
         }
       }
     },
-    firebase () {
-      return {
-        projects: projectsRef
+    computed: {
+      user () {
+        return this.$store.getters.user
       }
     },
     methods: {
       submit () {
-        return projectsRef.push(this.newProject)
-                .then(() => {
-                  toastr.success('Projekt dodany!')
-                  this.newProject.name = ''
-                  this.newProject.createdOn = new Date().toLocaleDateString('pl-PL')
-                  this.$router.push({path: '/project/:id', params: {id: this.route.params.id}})
-                })
-                .catch((err) => {
-                  console.log(err)
-                  toastr.error('Projekt niedodany!')
-                })
+        this.$http.post('/projects', this.newProject)
+          .then(() => {
+            toastr.success('Projekt dodany!')
+            this.newProject.name = ''
+            this.newProject = Date.now
+            this.$router.push({path: '/projects'})
+          })
+          .catch((err) => {
+            console.log(err)
+            toastr.error('Projekt niedodany!')
+          })
       }
     }
   }

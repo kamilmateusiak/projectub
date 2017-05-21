@@ -1,16 +1,54 @@
 <template>
-  <nav class="nav-extended light-blue darken-3">
-    <div class="nav-wrapper">
-      <router-link to="/" tag="a" class="brand-logo">ProjectHub</router-link>
-    </div>
-    <div class="nav-content">
-      <ul class="tabs tabs-transparent">
-        <router-link to="/" tag="li" class="tab" active-class="active" exact><a>Główna</a></router-link>
-        <router-link to="/projects" class="tab" tag="li" active-class="active"><a>Projekty</a></router-link>
-      </ul>
-    </div>
-  </nav>
+  <v-tabs id="mobile-tabs-6" scroll-bars>
+    <v-card-row  class="primary white--text">
+      <v-card-title>Projecthub</v-card-title>
+      <v-btn icon @click.native="navigateToAccount">
+        <v-icon>account_circle</v-icon>
+      </v-btn>
+      <v-btn icon @click.native="logout">
+        <v-icon>exit_to_app</v-icon>
+      </v-btn>
+    </v-card-row>  
+    <v-tab-item
+      :class="{'tab__item--active': currentRoute === 'home'}"
+      :router="true"
+      to="/"
+      slot="activators"
+    >
+      Home
+    </v-tab-item>
+    <v-tab-item
+    :class="{'tab__item--active': currentRoute === 'projects'}"
+      :router="true"
+      to="/projects"
+      slot="activators"
+    >
+      Projects
+    </v-tab-item>
+    
+     
+  </v-tabs>
+
 </template>
+
+<script>
+  export default {
+    data () {
+      return {
+        currentRoute: this.$route.name
+      }
+    },
+    methods: {
+      navigateToAccount () {
+        this.$router.push({path: '/account'})
+      },
+      logout () {
+        this.$store.dispatch('logout')
+        this.$router.push({path: '/login'})
+      }
+    }
+  }
+</script>
 
 <style scoped>
   .tab {

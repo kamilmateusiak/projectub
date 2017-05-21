@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <app-header></app-header>
+    <app-header v-if="authenticated"></app-header>
     <router-view></router-view>
   </div>
 </template>
@@ -10,6 +10,23 @@
 
   export default {
     name: 'app',
+    data () {
+      return {
+        user: null,
+        token: null
+      }
+    },
+    created () {
+      if (localStorage.getItem('token') !== null) {
+        const userId = localStorage.getItem('_id')
+        this.$store.dispatch('authenticate', userId)
+      }
+    },
+    computed: {
+      authenticated () {
+        return this.$store.getters.authenticated
+      }
+    },
     components: {
       appHeader: Header
     }

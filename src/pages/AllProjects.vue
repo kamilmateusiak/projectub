@@ -3,24 +3,31 @@
     <div class="col s12 m8 l6">
       <h1>Projekty</h1>
       <ol class="timeline">
-        <single-project v-for="(project, index) in projects" :key="index" :project="project"></single-project>
+        <single-project v-for="project in projects" :key="project._id" :project="project"></single-project>
       </ol>
-      <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/projects/new'">Dodaj</router-link>
+      <v-btn primary dark router to="/projects/new" class="add-new-btn">Dodaj</v-btn>
     </div>
   </div>
 </template>
 
 <script>
-  import db from '../firebase'
   import SingleProject from '../components/SingleProject.vue'
-  let projectsRef = db.ref('projects')
 
   export default {
     name: 'app',
-    firebase () {
+    data () {
       return {
-        projects: projectsRef
+        projects: []
       }
+    },
+    created () {
+      this.$http.get('/projects')
+      .then(response => {
+        this.projects = response.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
     },
     components: {
       SingleProject
