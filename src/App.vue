@@ -1,8 +1,10 @@
 <template>
-  <div class="wrapper">
-    <app-header v-if="authenticated"></app-header>
-    <router-view></router-view>
-  </div>
+  <v-app>
+    <div class="wrapper">
+      <app-header v-if="authenticated"></app-header>
+      <router-view></router-view>
+    </div>
+  </v-app>
 </template>
 
 <script>

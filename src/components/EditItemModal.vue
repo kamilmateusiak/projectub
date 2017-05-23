@@ -1,65 +1,67 @@
 <template>
   <!-- Modal Structure -->
-    <v-card>
-      <v-card-row>
-        <v-card-title>User Profile</v-card-title>
-      </v-card-row>
-      <v-card-row>
-        <v-card-text>
-          <v-text-field label="Email" required></v-text-field>
-          <v-text-field label="Password" type="password" required></v-text-field>
-          <v-text-field label="Legal first name" required></v-text-field>
-          <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-          <v-text-field label="Legal last name" hint="example of persistent helper text"
-            persistent-hint
-            required
-          ></v-text-field>
-          <small>*indicates required field</small>
-        </v-card-text>
-      </v-card-row>
-      <v-card-row actions>
-        <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Close</v-btn>
-        <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Save</v-btn>
-      </v-card-row>
-    </v-card>
-    <!--<div class="modal-content">
-      <form class="col s12" @submit.prevent="submit">
-        <div class="row">
-          <div class="input-field col s6">
-            <input type="text" class="validate" v-model="editedItem.name">
-            <label class="active">Nazwa</label>
-          </div>
-          <div class="input-field col s6">
-            <input id="item_date" type="text" class="validate" v-model="editedItem.createdOn">
-            <label for="item_date" class="active">Data dodania</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <textarea class="materialize-textarea" v-model="editedItem.content"></textarea>
-            <label class="active">Opis</label>
-          </div>
-        </div>
-        <div class="row" v-for="link in editedItem.links">
-          <div class="input-field col s5">
-            <input type="text" class="validate" v-model="link.label">
-            <label class="active">Opis linku</label>
-          </div>
-          <div class="input-field col s5">
-            <input type="text" class="validate" v-model="link.href">
-            <label class="active">Link</label>
-          </div>
-          <div class="col s2">
-            <i class="delete-icon small material-icons" @click="deleteLink(link)">delete</i>
-          </div>
-        </div>
-        <a class="btn-floating btn-small waves-effect waves-light red left" @click="addAnotherLink"><i class="material-icons">add</i></a>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button class="btn light-blue darken-3" @click.prevent="cancelEdit">Cancel</button>
-      <button class="btn light-blue darken-3" @click.prevent="saveItem">Zapisz</button>
-    </div>-->
+  <v-layout row justify-center>
+    <v-dialog class="dialog--white" lazy v-model="isEditing" width="80%">
+      <v-card>
+        <v-card-row>
+          <v-card-text>
+            <v-layout row>
+              <v-flex xs6>
+                <v-text-field
+                    v-model="editedItem.name"
+                    label="Nazwa"
+                  ></v-text-field>
+              </v-flex>
+              <v-flex xs6>
+                <v-text-field
+                    v-model="editedItem.createdOn"
+                    label="Data dodania"
+                  ></v-text-field>
+              </v-flex>
+            </v-layout>
+            <v-layout row>
+              <v-flex xs12>
+                <v-text-field
+                    v-model="editedItem.description"
+                    label="Opis"
+                    multi-line
+                  ></v-text-field>
+              </v-flex>
+            </v-layout>
+            <v-layout v-for="(attachment, index) in editedItem.attachments" :key="index">
+              <v-flex xs5>
+                <v-text-field
+                    v-model="attachment.name"
+                    label="Opis linku"
+                  ></v-text-field>
+              </v-flex>
+              <v-flex xs5>
+                <v-text-field
+                    v-model="attachment.href"
+                    label="Link"
+                  ></v-text-field>
+              </v-flex>
+              <v-flex xs2>
+                <v-btn small icon outline class="blue--text item-icon" @click.native.stop="deleteLink(link)">
+                  <v-icon class="blue--text text--darken-2">delete</v-icon>
+                </v-btn>
+              </v-flex>
+            </v-layout>
+            <v-btn floating class="right blue" @click.native="addAnotherLink">
+              <v-icon light>add</v-icon>
+            </v-btn>
+            <v-btn light class="blue" @click.native="isEditing = false">
+              Close
+            </v-btn>
+            <v-btn light class="blue" @click.native="isEditing = false">
+              Save
+              <v-icon right light>send</v-icon>
+            </v-btn>
+          </v-card-text>
+        </v-card-row>
+      </v-card>
+  </v-dialog>
+  </v-layout>
 </template>
 
 <script>
@@ -67,23 +69,24 @@
   import _ from 'lodash'
 
   export default {
-    props: ['item'],
     data () {
       return {
-        editedItem: {
-          name: this.item.name,
-          createdOn: this.item.createdOn,
-          content: this.item.content,
-          links: this.item.links
-        }
+        editedItem: {},
+        isEditing: false
       }
+    },
+    created () {
+      eventBus.$on('editEvent', (data) => {
+        this.isEditing = true
+        this.editedItem = data
+      })
     },
     methods: {
       addAnotherLink () {
-        if (typeof this.editedItem.links === 'undefined') {
-          this.editedItem.links = []
+        if (typeof this.editedItem.attachments === 'undefined') {
+          this.editedItem.attachments = []
         }
-        this.editedItem.links.push({ label: '', href: '' })
+        this.editedItem.attachments.push({ name: '', href: '' })
       },
       saveItem () {
         eventBus.$emit('itemWasEdited', {
@@ -94,17 +97,16 @@
       cancelEdit () {
         eventBus.$emit('editWasCanceled')
       },
-      deleteLink (link) {
-        let index = _.indexOf(this.editedItem.links, link)
-        let links = this.editedItem.links
-        this.editedItem.links.splice(index, 1)
-        this.item.links = links
+      deleteLink (attachment) {
+        let index = _.indexOf(this.editedItem.attachments, attachment)
+        let attachments = this.editedItem.attachments
+        this.editedItem.attachments.splice(index, 1)
       }
     }
   }
 </script>
 
-<style>
+<style scoped>
   .delete-icon {
     cursor: pointer;
   }

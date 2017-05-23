@@ -6,16 +6,16 @@
     <v-container style="margin-top: 50px;">
       <form>
         <v-layout row>
-          <v-col xs6 offset-xs3>
+          <v-flex xs6 offset-xs3>
             <v-text-field
                 v-model="email"
                 label="E-mail"
                 :rules="[validateEmail]"
               ></v-text-field>
-          </v-col>
+          </v-flex>
         </v-layout>
         <v-layout row>
-          <v-col xs6 offset-xs3>
+          <v-flex xs6 offset-xs3>
             <v-text-field
                 v-model="password"
                 type="password"
@@ -23,12 +23,13 @@
                 label="Password"
                 :rules="[validatePassword]"
               ></v-text-field>
-          </v-col>
+          </v-flex>
         </v-layout>
         <v-layout row>
           <v-btn
             style="margin: 0 auto;"
-            primary
+            light
+            class="blue"
             v-bind:loading="loggingin"
             @click.native="login"
             v-bind:disabled="loggingin"
@@ -86,8 +87,7 @@
           localStorage.setItem('token', res.headers['x-auth'])
           localStorage.setItem('email', user.email)
           localStorage.setItem('_id', user._id)
-          const userId = localStorage.getItem('_id')
-          this.$store.dispatch('authenticate', userId)
+          this.$store.dispatch('authenticate', user._id)
           this.$router.push('/')
         })
         .catch(e => {

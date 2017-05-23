@@ -1,11 +1,7 @@
 <template>
   <v-layout row class="timeline-container">
     <v-flex xs6>
-      <v-layout row justify-center>
-        <v-dialog lazy v-model="isEditing" width="90%">
-          <edit-item-modal :item="editedItem"></edit-item-modal>
-        </v-dialog>
-      </v-layout>
+      <edit-item-modal></edit-item-modal>
       <h1>
         {{ project.name }}
       </h1>
@@ -31,26 +27,10 @@
     data () {
       return {
         name: this.$route.params.name,
-        isEditing: false,
-        editedItem: {},
         project: {}
       }
     },
-    watch: {
-      'isEditing' () {
-        console.log(this.isEditing)
-      }
-    },
     computed: {
-      // modalStyle () {
-      //   if (this.isEditing) {
-      //     return {
-      //       display: 'block',
-      //       zIndex: '100'
-      //     }
-      //   }
-      //   return {}
-      // },
       projectName () {
         if (typeof this.project[1] === 'undefined') {
           return ''
@@ -76,20 +56,8 @@
       .catch(err => {
         console.log(err)
       })
-
-      eventBus.$on('editEvent', (data) => {
-        this.editedItem = data
-        this.isEditing = true
-      })
-      eventBus.$on('itemWasEdited', (data) => {
-        return 'lol'
-      })
-      eventBus.$on('editWasCanceled', () => {
-        this.isEditing = false
-      })
       eventBus.$on('removeEvent', (item) => {
         this.project.events = _.pull(this.project.events, item)
-        console.log(this.project.events)
       })
     }
   }

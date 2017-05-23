@@ -5,17 +5,17 @@
     </div>
     <v-container style="margin-top: 50px;">
       <form>
-        <v-row row>
-          <v-col xs6 offset-xs3>
+        <v-layout row>
+          <v-flex xs6 offset-xs3>
             <v-text-field
                 v-model="email"
                 label="E-mail"
                 :rules="[validateEmail]"
               ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row row>
-          <v-col xs6 offset-xs3>
+          </v-flex>
+        </v-layout>
+        <v-layout row>
+          <v-flex xs6 offset-xs3>
             <v-text-field
                 v-model="password"
                 type="password"
@@ -23,23 +23,24 @@
                 label="Password"
                 :rules="[validatePassword]"
               ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row>
+          </v-flex>
+        </v-layout>
+        <v-layout>
           <v-btn
             style="margin: 0 auto;"
-            primary
+            light
+            class="blue"
             v-bind:loading="registeringin"
             @click.native="register"
             v-bind:disabled="registeringin"
           >
             Register
           </v-btn>
-        </v-row>
+        </v-layout>
       </form>
-      <v-row>
+      <v-layout>
         <p style="margin: 20px auto;">If you have account try <router-link tag="a" :to="{name: 'login'}">login</router-link>!</p>
-      </v-row>
+      </v-layout>
     </v-container>
   </div>  
 </template>
