@@ -99,7 +99,6 @@
       },
       deleteLink (attachment) {
         let index = _.indexOf(this.editedItem.attachments, attachment)
-        let attachments = this.editedItem.attachments
         this.editedItem.attachments.splice(index, 1)
       }
     }
