@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ export const store = new Vuex.Store({
     authenticate (state, payload) {
       state.userId = payload
       state.authenticated = true
+      axios.defaults.headers.common['user-id'] = JSON.stringify(state.userId).trim()
     },
     logout (state) {
       localStorage.removeItem('token')
