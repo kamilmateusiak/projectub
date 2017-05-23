@@ -1,34 +1,34 @@
 <template>
-  <v-tabs id="mobile-tabs-6" scroll-bars>
-    <v-card-row  class="primary white--text">
-      <v-card-title>Projecthub</v-card-title>
-      <v-btn icon @click.native="navigateToAccount">
+  <nav>
+    <v-toolbar>
+      <v-toolbar-title class="hidden-sm-and-down">Projecthub</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon light @click.native="navigateToAccount">
         <v-icon>account_circle</v-icon>
       </v-btn>
-      <v-btn icon @click.native="logout">
+      <v-btn icon light @click.native="logout">
         <v-icon>exit_to_app</v-icon>
       </v-btn>
-    </v-card-row>  
-    <v-tab-item
-      :class="{'tab__item--active': currentRoute === 'home'}"
-      :router="true"
-      to="/"
-      slot="activators"
-    >
-      Home
-    </v-tab-item>
-    <v-tab-item
-    :class="{'tab__item--active': currentRoute === 'projects'}"
-      :router="true"
-      to="/projects"
-      slot="activators"
-    >
-      Projects
-    </v-tab-item>
-    
-     
-  </v-tabs>
-
+    </v-toolbar>
+    <v-tabs light>
+      <v-tabs-bar slot="activators">
+        <v-tabs-slider></v-tabs-slider>
+        <v-tabs-item
+          router
+          href="/"
+          exact
+        >
+          Home
+        </v-tabs-item>
+        <v-tabs-item
+          router
+          href="/projects"
+        >
+          Projects
+        </v-tabs-item>
+      </v-tabs-bar>
+    </v-tabs>
+  </nav>
 </template>
 
 <script>
@@ -51,6 +51,9 @@
 </script>
 
 <style scoped>
+  .toolbar {
+    box-shadow: none;
+  }
   .tab {
     transition: background-color .5s ease-in-out;
   }

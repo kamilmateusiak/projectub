@@ -9,8 +9,8 @@ import { store } from './store/store'
 Vue.use(VueRouter)
 Vue.use(Vuetify)
 
-axios.defaults.baseURL = 'http://localhost:3000/api'
-// axios.defaults.baseURL = 'https://lm-project-hub.herokuapp.com/api'
+// axios.defaults.baseURL = 'http://localhost:3000/api'
+axios.defaults.baseURL = 'https://lm-project-hub.herokuapp.com/api'
 axios.defaults.headers.common['user-id'] = JSON.stringify(localStorage.getItem('_id')).trim()
 Vue.prototype.$http = axios
 

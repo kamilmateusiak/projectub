@@ -2,53 +2,54 @@
   <div style="margin-top: 50px;">
   <v-container>
     <form @submit.prevent="submit">
-      <v-row row>
-        <v-col xs6>
+      <v-layout row>
+        <v-flex xs6>
           <v-text-field
               v-model="newEvent.name"
               label="Nazwa"
             ></v-text-field>
-        </v-col>
+        </v-flex>
       
-        <v-col xs6>
+        <v-flex xs6>
           <v-text-field
               v-model="createdOn"
               label="Data dodania"
             ></v-text-field>
-        </v-col>
-      </v-row>
-      <v-row row>
-        <v-col xs12>
+        </v-flex>
+      </v-layout>
+      <v-layout row>
+        <v-flex xs12>
           <v-text-field
               v-model="newEvent.description"
               label="Opis"
               multi-line
             ></v-text-field>
-        </v-col>
-      </v-row>
-      <v-row v-for="(attachment, index) in attachments" :key="index">
-        <v-col xs6>
+        </v-flex>
+      </v-layout>
+      <v-layout v-for="(attachment, index) in attachments" :key="index">
+        <v-flex xs6>
           <v-text-field
               v-model="attachment.name"
               label="Opis linku"
             ></v-text-field>
-        </v-col>
-        <v-col xs6>
+        </v-flex>
+        <v-flex xs6>
           <v-text-field
               v-model="attachment.href"
               label="Link"
             ></v-text-field>
-        </v-col>
-      </v-row>
+        </v-flex>
+      </v-layout>
       
-      <v-btn primary floating small dark class="right"  @click.native="addAnotherLink">
-        <v-icon>add</v-icon>
+      <v-btn floating class="right blue"  @click.native="addAnotherLink">
+        <v-icon light>add</v-icon>
       </v-btn>
       <!-- <a class="btn-floating btn-small waves-effect waves-light red right"><i class="material-icons">add</i></a> -->
-      <button class="btn light-blue darken-3" type="submit" name="action">Dodaj
-        <i class="material-icons right">send</i>
-      </button>
-      <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/project/' + $route.params.name">Wróć</router-link>
+      <v-btn light class="blue" type="submit">
+        Dodaj
+        <v-icon right light>send</v-icon>
+      </v-btn>
+      <v-btn light router :to="'/project/' + $route.params.name" class="blue add-new-btn">Wróć</v-btn>
     </form>
     </v-container>
   </div>

@@ -5,7 +5,7 @@
     </div>
     <v-container style="margin-top: 50px;">
       <form>
-        <v-row row>
+        <v-layout row>
           <v-col xs6 offset-xs3>
             <v-text-field
                 v-model="email"
@@ -13,8 +13,8 @@
                 :rules="[validateEmail]"
               ></v-text-field>
           </v-col>
-        </v-row>
-        <v-row row>
+        </v-layout>
+        <v-layout row>
           <v-col xs6 offset-xs3>
             <v-text-field
                 v-model="password"
@@ -24,8 +24,8 @@
                 :rules="[validatePassword]"
               ></v-text-field>
           </v-col>
-        </v-row>
-        <v-row>
+        </v-layout>
+        <v-layout row>
           <v-btn
             style="margin: 0 auto;"
             primary
@@ -35,11 +35,11 @@
           >
             Login
           </v-btn>
-        </v-row>
+        </v-layout>
       </form>
-      <v-row>
+      <v-layout row>
         <p style="margin: 20px auto;">Don't have account? <router-link tag="a" :to="{name: 'register'}">Sigup</router-link></p>
-      </v-row>
+      </v-layout>
     </v-container>
   </div>  
 </template>

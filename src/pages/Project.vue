@@ -1,19 +1,21 @@
 <template>
-  <div class="row timeline-container">
-    <v-col xs6>
-      <transition name="slide" type="animation">
-        <edit-item-modal v-if="isEditing" :style="modalStyle" :item="editedItem"></edit-item-modal>
-      </transition>
+  <v-layout row class="timeline-container">
+    <v-flex xs6>
+      <v-layout row justify-center>
+        <v-dialog lazy v-model="isEditing" width="90%">
+          <edit-item-modal :item="editedItem"></edit-item-modal>
+        </v-dialog>
+      </v-layout>
       <h1>
         {{ project.name }}
       </h1>
       <ol class="timeline">
         <single-item v-for="event in project.events" :event="event" :key="event._id"></single-item>
       </ol>
-      <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/project/' + project.name + '/new'">Dodaj</router-link>
-    </v-col>
+      <v-btn light router :to="'/project/' + project.name + '/new'" class="blue add-new-btn">Dodaj</v-btn>
+    </v-flex>
     <project-team></project-team>
-  </div>
+  </v-layout>
 
 </template>
 
@@ -34,16 +36,21 @@
         project: {}
       }
     },
+    watch: {
+      'isEditing' () {
+        console.log(this.isEditing)
+      }
+    },
     computed: {
-      modalStyle () {
-        if (this.isEditing) {
-          return {
-            display: 'block',
-            zIndex: '100'
-          }
-        }
-        return {}
-      },
+      // modalStyle () {
+      //   if (this.isEditing) {
+      //     return {
+      //       display: 'block',
+      //       zIndex: '100'
+      //     }
+      //   }
+      //   return {}
+      // },
       projectName () {
         if (typeof this.project[1] === 'undefined') {
           return ''
@@ -72,7 +79,6 @@
 
       eventBus.$on('editEvent', (data) => {
         this.editedItem = data
-        console.log('edit')
         this.isEditing = true
       })
       eventBus.$on('itemWasEdited', (data) => {
