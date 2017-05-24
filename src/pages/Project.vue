@@ -1,19 +1,17 @@
 <template>
-  <div class="row timeline-container">
-    <v-col xs6>
-      <transition name="slide" type="animation">
-        <edit-item-modal v-if="isEditing" :style="modalStyle" :item="editedItem"></edit-item-modal>
-      </transition>
+  <v-layout row class="timeline-container">
+    <v-flex xs6>
+      <edit-item-modal></edit-item-modal>
       <h1>
         {{ project.name }}
       </h1>
       <ol class="timeline">
         <single-item v-for="event in project.events" :event="event" :key="event._id"></single-item>
       </ol>
-      <router-link tag="button" class="btn light-blue darken-3 add-new-btn" :to="'/project/' + project.name + '/new'">Dodaj</router-link>
-    </v-col>
+      <v-btn light router :to="'/project/' + project.name + '/new'" class="blue add-new-btn">Dodaj</v-btn>
+    </v-flex>
     <project-team></project-team>
-  </div>
+  </v-layout>
 
 </template>
 
@@ -29,21 +27,10 @@
     data () {
       return {
         name: this.$route.params.name,
-        isEditing: false,
-        editedItem: {},
         project: {}
       }
     },
     computed: {
-      modalStyle () {
-        if (this.isEditing) {
-          return {
-            display: 'block',
-            zIndex: '100'
-          }
-        }
-        return {}
-      },
       projectName () {
         if (typeof this.project[1] === 'undefined') {
           return ''
@@ -69,21 +56,8 @@
       .catch(err => {
         console.log(err)
       })
-
-      eventBus.$on('editEvent', (data) => {
-        this.editedItem = data
-        console.log('edit')
-        this.isEditing = true
-      })
-      eventBus.$on('itemWasEdited', (data) => {
-        return 'lol'
-      })
-      eventBus.$on('editWasCanceled', () => {
-        this.isEditing = false
-      })
       eventBus.$on('removeEvent', (item) => {
         this.project.events = _.pull(this.project.events, item)
-        console.log(this.project.events)
       })
     }
   }

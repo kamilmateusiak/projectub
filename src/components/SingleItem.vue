@@ -6,8 +6,8 @@
     <div class="timeline-links" v-for="attachment in event.attachments">
       <a :href="attachment.href">{{ attachment.name }}</a>
     </div>
-    <span class="item-icon"><v-icon class="blue--text text--darken-2" @click.native="editItem">mode_edit</v-icon></span>
-    <span class="item-icon"><v-icon class="grey--text text--darken-2" @click.native="removeItem">delete</v-icon></span>
+    <v-btn small icon outline class="blue--text item-icon" @click.stop.native="editItem" slot="activator"><v-icon class="blue--text text--darken-2">mode_edit</v-icon></v-btn>
+    <v-btn small icon outline class="blue--text item-icon" @click.native="removeItem"><v-icon class="blue--text text--darken-2">delete</v-icon></v-btn>
   </li>
 </template>
 
@@ -53,5 +53,6 @@
 <style scoped>
   .item-icon {
     cursor: pointer;
+    margin: 10px 0;
   }
 </style>

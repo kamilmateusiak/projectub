@@ -5,17 +5,17 @@
     </div>
     <v-container style="margin-top: 50px;">
       <form>
-        <v-row row>
-          <v-col xs6 offset-xs3>
+        <v-layout row>
+          <v-flex xs6 offset-xs3>
             <v-text-field
                 v-model="email"
                 label="E-mail"
                 :rules="[validateEmail]"
               ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row row>
-          <v-col xs6 offset-xs3>
+          </v-flex>
+        </v-layout>
+        <v-layout row>
+          <v-flex xs6 offset-xs3>
             <v-text-field
                 v-model="password"
                 type="password"
@@ -23,23 +23,24 @@
                 label="Password"
                 :rules="[validatePassword]"
               ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row>
+          </v-flex>
+        </v-layout>
+        <v-layout row>
           <v-btn
             style="margin: 0 auto;"
-            primary
+            light
+            class="blue"
             v-bind:loading="loggingin"
             @click.native="login"
             v-bind:disabled="loggingin"
           >
             Login
           </v-btn>
-        </v-row>
+        </v-layout>
       </form>
-      <v-row>
-        <p style="margin: 20px auto;">Don't have account? <router-link tag="a" :to="{name: 'register'}">Sigup</router-link></p>
-      </v-row>
+      <v-layout row>
+        <p class="text--center">Don't have account? <router-link tag="a" :to="{name: 'register'}">Sigup</router-link></p>
+      </v-layout>
     </v-container>
   </div>  
 </template>
@@ -86,8 +87,7 @@
           localStorage.setItem('token', res.headers['x-auth'])
           localStorage.setItem('email', user.email)
           localStorage.setItem('_id', user._id)
-          const userId = localStorage.getItem('_id')
-          this.$store.dispatch('authenticate', userId)
+          this.$store.dispatch('authenticate', user._id)
           this.$router.push('/')
         })
         .catch(e => {
@@ -98,3 +98,9 @@
     }
   }
 </script>
+
+<style>
+  .text--center {
+    margin: 20px auto;
+  }
+</style>

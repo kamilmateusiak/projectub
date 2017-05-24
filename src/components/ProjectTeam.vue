@@ -1,8 +1,8 @@
 <template>
-  <v-col xs6>
+  <v-flex xs6>
     <p>Team: </p>
     <p v-for="member in teamMembers" :key="member._id">{{ member.name }} {{ member.surname }}</p>
-  </v-col>
+  </v-flex>
 </template>
 
 <script>

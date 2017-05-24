@@ -9,9 +9,9 @@
           ></v-text-field>
         </div>
         </div>
-      <v-btn primary dark type="submit">Dodaj</v-btn>
+      <v-btn light class="blue" type="submit">Dodaj</v-btn>
     </form>
-    <v-btn primary dark router to="/projects" class="add-new-btn">Wróć</v-btn>
+    <v-btn light router to="/projects" class="blue add-new-btn">Wróć</v-btn>
   </div>
 </template>
 
