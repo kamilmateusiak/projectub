@@ -39,7 +39,7 @@
         </v-layout>
       </form>
       <v-layout>
-        <p style="margin: 20px auto;">If you have account try <router-link tag="a" :to="{name: 'login'}">login</router-link>!</p>
+        <p class="text--center">If you have account try <router-link tag="a" :to="{name: 'login'}">login</router-link>!</p>
       </v-layout>
     </v-container>
   </div>  

@@ -44,7 +44,6 @@
       <v-btn floating class="right blue"  @click.native="addAnotherLink">
         <v-icon light>add</v-icon>
       </v-btn>
-      <!-- <a class="btn-floating btn-small waves-effect waves-light red right"><i class="material-icons">add</i></a> -->
       <v-btn light class="blue" type="submit">
         Dodaj
         <v-icon right light>send</v-icon>

@@ -39,7 +39,7 @@
         </v-layout>
       </form>
       <v-layout row>
-        <p style="margin: 20px auto;">Don't have account? <router-link tag="a" :to="{name: 'register'}">Sigup</router-link></p>
+        <p class="text--center">Don't have account? <router-link tag="a" :to="{name: 'register'}">Sigup</router-link></p>
       </v-layout>
     </v-container>
   </div>  
@@ -98,3 +98,9 @@
     }
   }
 </script>
+
+<style>
+  .text--center {
+    margin: 20px auto;
+  }
+</style>
