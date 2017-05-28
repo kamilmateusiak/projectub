@@ -53,7 +53,7 @@
             <v-btn light class="blue" @click.native="cancelEdit">
               Close
             </v-btn>
-            <v-btn light class="blue" @click.native="isEditing = false">
+            <v-btn light class="blue" @click.native="saveItem">
               Save
               <v-icon right light>send</v-icon>
             </v-btn>
@@ -66,6 +66,7 @@
 
 <script>
   import { eventBus } from '../main'
+  import toastr from 'toastr'
   import _ from 'lodash'
 
   export default {
@@ -109,7 +110,24 @@
         }
         this.editedItem.attachments.push({ name: '', href: '' })
       },
-      saveItem () {},
+      saveItem () {
+        this.$http.put('/events/' + this.editedItem._id, {
+          event: {
+            name: this.editedItem.name,
+            date: this.editedItem.date,
+            description: this.editedItem.description
+          },
+          attachments: this.editedItem.attachments
+        })
+        .then((response) => {
+          this.isEditing = false
+          toastr.success('Event edited!')
+          console.log(response)
+        })
+        .catch(err => {
+          toastr.error(err)
+        })
+      },
       cancelEdit () {
         this.editedItem.name = this.beforeEdit.name
         this.editedItem.date = this.beforeEdit.date
