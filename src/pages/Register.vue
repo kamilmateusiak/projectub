@@ -64,6 +64,8 @@
 </template>
 
 <script>
+  import toastr from 'toastr'
+
   export default {
     name: 'app',
     data () {
@@ -114,20 +116,28 @@
     },
     methods: {
       register () {
+        if (this.validateName !== true ||
+            this.validateSurname !== true ||
+            this.validateEmail !== true ||
+            this.validatePassword !== true) {
+          return toastr.error('Sprawdź swoje dane!')
+        }
         this.registeringin = true
-        this.$http.post('/users/register', {
+        return this.$http.post('/users/register', {
           email: this.email,
           password: this.password,
           name: this.name,
           surname: this.surname
         })
         .then(res => {
+          toastr.success('Udało się! Możesz się zalogować')
           this.$router.push('/login')
         })
         .catch(e => {
+          toastr.error('Wystąpił błąd. Sprawdź dane lub skontaktuj się z administratorem.')
           console.log(e)
+          this.registeringin = false
         })
-        this.registeringin = false
       }
     }
   }

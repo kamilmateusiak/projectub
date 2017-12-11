@@ -46,6 +46,8 @@
 </template>
 
 <script>
+  import toastr from 'toastr'
+
   export default {
     name: 'app',
     data () {
@@ -92,6 +94,7 @@
         })
         .catch(e => {
           console.log(e)
+          return toastr.error('Sprawdź swoje dane!')
         })
         this.loggingin = false
       }

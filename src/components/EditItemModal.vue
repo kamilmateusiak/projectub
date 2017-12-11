@@ -42,7 +42,7 @@
                   ></v-text-field>
               </v-flex>
               <v-flex xs2>
-                <v-btn small icon outline class="blue--text item-icon" @click.native.stop="deleteLink(link)">
+                <v-btn small icon outline class="blue--text item-icon" @click.native.stop="deleteLink(attachment)">
                   <v-icon class="blue--text text--darken-2">delete</v-icon>
                 </v-btn>
               </v-flex>
@@ -125,7 +125,8 @@
           console.log(response)
         })
         .catch(err => {
-          toastr.error(err)
+          console.log(err)
+          return toastr.error('Błąd edycji. Sprawdź dane.')
         })
       },
       cancelEdit () {

@@ -1,14 +1,15 @@
 <template>
   <div class="timeline-container" style="margin-top: 50px;">
     <form @submit.prevent="submit">
-      <div class="row">
-        <div class="input-field col s12 m6">
-        <v-text-field
-            v-model="newProject.name"
-            label="Nazwa"
-          ></v-text-field>
-        </div>
-        </div>
+      <v-layout row>
+        <v-flex xs6>
+          <v-text-field
+              v-model="newProject.name"
+              label="Nazwa"
+              :rules="[validateName]"
+            ></v-text-field>
+        </v-flex>
+      </v-layout>
       <v-btn light class="blue" type="submit">Dodaj</v-btn>
     </form>
     <v-btn light router to="/projects" class="blue add-new-btn">Wróć</v-btn>
@@ -30,11 +31,24 @@
     computed: {
       user () {
         return this.$store.getters.user
+      },
+      validateName () {
+        var re = /\s/g
+        if (this.newProject.name.length === 0) {
+          return 'Required!'
+        } else if (re.test(this.newProject.name) && this.newProject.name.length > 0) {
+          return 'Name must not have white space!'
+        } else {
+          return true
+        }
       }
     },
     methods: {
       submit () {
-        this.$http.post('/projects', this.newProject)
+        if (this.validateName !== true) {
+          return toastr.error('Sprawdź dane!')
+        }
+        return this.$http.post('/projects', this.newProject)
           .then(() => {
             toastr.success('Projekt dodany!')
             this.newProject.name = ''
@@ -43,7 +57,7 @@
           })
           .catch((err) => {
             console.log(err)
-            toastr.error('Projekt niedodany!')
+            toastr.error('Nie udało się dodać projektu. Sprawdź dane!')
           })
       }
     }
