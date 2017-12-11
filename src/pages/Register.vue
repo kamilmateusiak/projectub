@@ -122,12 +122,7 @@
           surname: this.surname
         })
         .then(res => {
-          let user = res.data
-          localStorage.setItem('token', res.headers['x-auth'])
-          localStorage.setItem('email', user.email)
-          localStorage.setItem('_id', user._id)
-          this.$store.dispatch('authenticate', user)
-          this.$router.push('/')
+          this.$router.push('/login')
         })
         .catch(e => {
           console.log(e)

@@ -10,7 +10,6 @@
       </ol>
       <v-btn light router :to="'/project/' + project.name + '/new'" class="blue add-new-btn">Dodaj</v-btn>
     </v-flex>
-    <project-team></project-team>
   </v-layout>
 
 </template>
