@@ -42,7 +42,7 @@
         <p class="text--center">Don't have account? <router-link tag="a" :to="{name: 'register'}">Sigup</router-link></p>
       </v-layout>
     </v-container>
-  </div>  
+  </div>
 </template>
 
 <script>

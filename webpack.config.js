@@ -5,6 +5,7 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
+    // publicPath: '/dist/',
     publicPath: '/project_hub-vue/dist/',
     filename: 'build.js'
   },
@@ -13,7 +14,7 @@ module.exports = {
       {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
-        enforce: "pre",
+        enforce: 'pre',
         options: {
           formatter: require('eslint-friendly-formatter')
         }

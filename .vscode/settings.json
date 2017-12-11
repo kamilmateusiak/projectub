@@ -6,5 +6,7 @@
     "files.autoSave": "off",
     "standard.enable": false,
     "standard.autoFixOnSave": true,
-    "gitlens.blame.annotation.activeLine": "inline"
+    "gitlens.blame.annotation.activeLine": "inline",
+    "jshint.enable": false,
+    "jscs.enable": false
 }

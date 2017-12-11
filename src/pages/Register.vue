@@ -8,6 +8,24 @@
         <v-layout row>
           <v-flex xs6 offset-xs3>
             <v-text-field
+                v-model="name"
+                label="Name"
+                :rules="[validateName]"
+              ></v-text-field>
+          </v-flex>
+        </v-layout>
+        <v-layout row>
+          <v-flex xs6 offset-xs3>
+            <v-text-field
+                v-model="surname"
+                label="Surname"
+                :rules="[validateSurname]"
+              ></v-text-field>
+          </v-flex>
+        </v-layout>
+        <v-layout row>
+          <v-flex xs6 offset-xs3>
+            <v-text-field
                 v-model="email"
                 label="E-mail"
                 :rules="[validateEmail]"
@@ -42,7 +60,7 @@
         <p class="text--center">If you have account try <router-link tag="a" :to="{name: 'login'}">login</router-link>!</p>
       </v-layout>
     </v-container>
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -50,22 +68,42 @@
     name: 'app',
     data () {
       return {
+        name: '',
+        surname: '',
         email: '',
         password: '',
         registeringin: false
       }
     },
     computed: {
+      validateName () {
+        if (this.name.length === 0) {
+          return 'Required!'
+        } else {
+          return true
+        }
+      },
+      validateSurname () {
+        if (this.surname.length === 0) {
+          return 'Required!'
+        } else {
+          return true
+        }
+      },
       validateEmail () {
         var re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])/
-        if (!re.test(this.email) && this.email.length > 0) {
+        if (this.email.length === 0) {
+          return 'Required!'
+        } else if (!re.test(this.email) && this.email.length > 0) {
           return 'Wrong email!'
         } else {
           return true
         }
       },
       validatePassword () {
-        if (this.password.length > 0 && this.password.length < 6) {
+        if (this.password.length === 0) {
+          return 'Required!'
+        } else if (this.password.length > 0 && this.password.length < 6) {
           return 'Password is too short'
         }
         return true
@@ -79,7 +117,9 @@
         this.registeringin = true
         this.$http.post('/users/register', {
           email: this.email,
-          password: this.password
+          password: this.password,
+          name: this.name,
+          surname: this.surname
         })
         .then(res => {
           let user = res.data
